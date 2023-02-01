@@ -3,13 +3,13 @@ package ceLinked;
 import java.util.Iterator;
 
 /**
- * WordList is a singly-linked list of Strings.
+ * WordList is a singly-linked list of type of elements of type E.
  * It is designed as a practice opportunity to
- * learn how to manipulate linked sturctures.
+ * learn how to manipulate linked structures.
  * 
  * @author ..........
  */
-public class WordList implements Iterable<String> {
+public class GenericList<E> implements Iterable<E> {
 	private Node head; // first node of the list or null
 	private Node tail; // last node of the list or null
 	private int n;     // number of words in the list
@@ -19,7 +19,7 @@ public class WordList implements Iterable<String> {
 	 * single reference to the next node.
 	 */
 	private class Node {
-		private String item;
+		private E item;
 		private Node next;
 	}
 	
@@ -29,7 +29,7 @@ public class WordList implements Iterable<String> {
 	 * 
 	 * @param newItem
 	 */
-	public void append(String newItem) {
+	public void append(E newItem) {
 		// create a new node based on the word provided by the user
 		Node newNode = new Node();
 		newNode.item = newItem;
@@ -51,14 +51,9 @@ public class WordList implements Iterable<String> {
 	 * 
 	 * @param newItem
 	 */
-	public void prepend(String newItem) {		
-		Node newNode = new Node();
-		newNode.item = newItem;
-
-		Node oldHead = head;
-		head = newNode;
-		head.next = oldHead;
-		n++;
+	public void prepend(E newItem) {		
+		
+		// TODO 2
 	}
 	
 	/** 
@@ -69,18 +64,8 @@ public class WordList implements Iterable<String> {
 	 * @param item
 	 * @return index of the first occurrence of the item; -1 if the word was not found.
 	 */
-	public int indexOf(String item) {		
-		int index = 0;
-		Node current = head;
-		while(current != null) {
-			if(current.item.equals(item)) {
-				return index;
-			} else {
-				index++;
-				current = current.next;
-			}
-	}
-		return -1; // TODO 3
+	public int indexOf(E item) {		
+		return 0; // TODO 3
 	}
 	
 	/** 
@@ -89,16 +74,15 @@ public class WordList implements Iterable<String> {
 	 * @param item
 	 * @return true if the item is contained in the list; false otherwise.
 	 */
-	public boolean contains(String item) {	
+	public boolean contains(E item) {	
 		Node current = head;
+			
 		while(current != null) {
-			if(current.item.equals(item)) {
-				return true;
-			} else {
+				// do something
 				current = current.next;
-			}
-	}
-		return false; // TODO 3
+		}
+		
+		return false; // TODO 4
 	}
 	
 	/**
@@ -131,11 +115,11 @@ public class WordList implements Iterable<String> {
 	}
 
 	@Override
-	public Iterator<String> iterator() {
+	public Iterator<E> iterator() {
 		return new WordListIterator();
 	}
 
-	private class WordListIterator implements Iterator<String> {
+	private class WordListIterator implements Iterator<E> {
 		private Node current = head;
 
 		@Override
@@ -144,8 +128,8 @@ public class WordList implements Iterable<String> {
 		}
 
 		@Override
-		public String next() {
-			String nextElement = current.item;
+		public E next() {
+			E nextElement = current.item;
 			current = current.next;
 			return nextElement;
 		}
@@ -154,14 +138,13 @@ public class WordList implements Iterable<String> {
 	
 	/* * * * * * * * Test Client * * * * * * */
 	public static void main(String[] args) {
-		WordList list = new WordList();
+		GenericList<String> list = new GenericList<>();
 		System.out.println("size: " + list.size());
 		
 		// TODO 1
 		// Dynamically determine whether the list is empty. If so, print 
 		// 'The list is empty.' otherwise print 'The list is not empty.'			
 		System.out.println("The list " + (list.isEmpty() ? "is" : "is not") + " empty.");
-
 		 
 		System.out.println("list: " + list);
 		list.append("ant");
@@ -172,13 +155,7 @@ public class WordList implements Iterable<String> {
 		System.out.println("list: " + list);
 		list.append("dog");
 		System.out.println("list: " + list);
-		list.prepend("ape");
-
-		System.out.println("list: " + list);
 		System.out.println();
-		System.out.println("contains cow: " + list.contains("monkey"));
-
-		System.out.println("indexOf cow: " + list.indexOf("cow"));
 
 		// Test iterator with foreach loop (preferred)
 		System.out.println("Test iterator with foreach loop (preferred)");
