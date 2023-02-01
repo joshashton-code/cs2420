@@ -10,18 +10,24 @@ public class CircularQueueA<Item> implements Iterable<Item> {
 
   public boolean isFull() {
 
+
+    return false; // TODO: Need to implement.
   }
 
   public boolean isEmpty() {
 
+
+    return false; // TODO: Need to implement.
   }
 
   public int size() {
     
+
+    return -1; // TODO: Need to implement.
   }
 
   public void enqueue(Item item) {
-    
+
   }
 
   public Item peek() {
