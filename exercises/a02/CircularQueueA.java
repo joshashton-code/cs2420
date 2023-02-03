@@ -3,6 +3,11 @@ package a02;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Represents a First In First Out (FIFO) queue.
+ * 
+ * Circular refers to the reuse of existing element positions which had their value removed from the queue.
+ */
 public class CircularQueueA<E> implements Iterable<E> {
 
   private E[] items;
