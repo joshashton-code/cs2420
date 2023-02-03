@@ -17,7 +17,7 @@ public class CircularQueueA<E> implements Iterable<E> {
     if(capacity < 1)
       throw new IllegalArgumentException("Cannot create a queue with a capacity lower than 1. Capacity higher than 2 is recommended.");
 
-    items = new Item[capacity];
+    // TODO: Need to implement generic array creation in constructor.
     n = 0;
   }
 
@@ -75,7 +75,7 @@ public class CircularQueueA<E> implements Iterable<E> {
     if(isEmpty())
       throw new NoSuchElementException("No elements exist, cannot dequeue an element that does not exist.");
 
-    return new E();
+    return items[0];
   }
 
   /**
@@ -88,7 +88,7 @@ public class CircularQueueA<E> implements Iterable<E> {
     if(isEmpty())
       throw new NoSuchElementException("No elements exist, cannot peek an element that does not exist.");
 
-    return new E();
+    return items[0];
   }
 
   @Override
