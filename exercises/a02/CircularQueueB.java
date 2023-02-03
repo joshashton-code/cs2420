@@ -5,42 +5,43 @@ import java.util.NoSuchElementException;
 
 public class CircularQueueB<E> implements Iterable<E> {
 
-	private Node head;
-	private Node tail;
-	private E item;
-	
-	private int n;
+	private Node head; // first node of the list or null
+	private Node tail; // last node of the list or null
+	private int n;     // number of words in the list
 
-	public CircularQueueB() {
+  	/**
+	 * Node of LinkedList that stores the item and a
+	 * single reference to the next node.
+	 */
+	private class Node {
+		private E item;
+		private Node next;
+    private Node prev;
 
+    public Node(E item, Node next, Node prev) {
+      this.item = item;
+      this.next = next;
+      this.prev = prev;
+    }
 	}
 
-	  /**
-   * Determines if the cicular queue has a number of elements equals to its capacity.
-   * 
-   * @return true if there are an equal amount of elements to the capacity.
-   */
-  public boolean isFull() {
-		return false; // TODO: Need to implement.
-  }
-
-  /**
-   * Determines if the queue has any items in it or not.
-   * 
-   * @return true if there are no items in the queue, otherwise return false.
-   */
-  public boolean isEmpty() {
-		return false; // TODO: Need to implement.
-  }
-
-  /**
-   * Determines the number of items inside of the queue.
-   * 
-   * @return the number of items.
-   */
-  public int size() {
-		return -1; // TODO: Need to implement.
-  }
+	/**
+	 * Returns the number of elements in the list.
+	 * 
+	 * @return the number of elements
+	 */
+	public int size() {
+		return n;
+	}
+	
+	/** 
+	 * Determines whether the list is empty or not.
+	 * 
+	 * @return true if there are no elements in the list.
+	 */
+	public boolean isEmpty() {
+		return n == 0;
+	}
 
   /**
    * Adds item into the cicular queue. Inserts into LinkedList for appropriate positioning.
@@ -49,9 +50,9 @@ public class CircularQueueB<E> implements Iterable<E> {
    * @throws UnsupportedOperationException
    */
   public void enqueue(E item) throws UnsupportedOperationException {
-    if(isFull())
-      throw new UnsupportedOperationException("Cannot add another element to a full queue.");
-
+    Node newTail = new Node(item, head, tail);
+    tail.next = newTail;
+    newTail = tail;
   }
 
   /**
@@ -64,7 +65,7 @@ public class CircularQueueB<E> implements Iterable<E> {
     if(isEmpty())
       throw new NoSuchElementException("No elements exist, cannot dequeue an element that does not exist.");
 
-		return null; // TODO: Need to implement.
+		return null; // TODO: Need to implement in part 2.
 		}
 
   /**
@@ -79,23 +80,31 @@ public class CircularQueueB<E> implements Iterable<E> {
 
 		return null; // TODO: Need to implement.
   }
-	/**
-	 * Node of LinkedList that stores the item and a
-	 * single reference to the next node.
-	 */
-	private class Node {
-		private E item;
-		private Node next;
-    private Node prev;
-	}
 
 	@Override
 	public String toString() {
 		return null; // TODO: Need to implement in part 2.
 	}
 
-	@Override
+  @Override
 	public Iterator<E> iterator() {
-		return null; // TODO Need to implement
+		return new QueueIterator();
+	}
+
+	private class QueueIterator implements Iterator<E> {
+		private Node current = head;
+
+		@Override
+		public boolean hasNext() {
+			return current != null;
+		}
+
+		@Override
+		public E next() {
+			E nextElement = current.item;
+			current = current.next;
+			return nextElement;
+		}
+
 	}
 }

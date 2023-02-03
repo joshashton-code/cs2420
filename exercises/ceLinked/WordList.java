@@ -102,7 +102,8 @@ public class WordList implements Iterable<String> {
 	}
 	
 	/**
-	 * Returns the number of elements in the list
+	 * Returns the number of elements in the list.
+	 * 
 	 * @return the number of elements
 	 */
 	public int size() {
@@ -111,6 +112,7 @@ public class WordList implements Iterable<String> {
 	
 	/** 
 	 * Determines whether the list is empty or not.
+	 * 
 	 * @return true if there are no elements in the list.
 	 */
 	public boolean isEmpty() {
