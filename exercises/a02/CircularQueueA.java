@@ -3,14 +3,14 @@ package a02;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class CircularQueueA<Item> implements Iterable<Item> {
+public class CircularQueueA<E> implements Iterable<E> {
 
-  private Item[] items;
+  private E[] items;
   private int n;
 
   public CircularQueueA(int capacity) throws IllegalArgumentException {
     if(capacity < 1)
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Cannot create a queue with a capacity lower than 1. Capacity higher than 2 is recommended.");
 
     items = new Item[capacity];
     n = 0;
@@ -22,7 +22,7 @@ public class CircularQueueA<Item> implements Iterable<Item> {
    * @return true if there are an equal amount of elements to the capacity.
    */
   public boolean isFull() {
-    return false; // TODO: Need to implement.
+    return size() == items.length;
   }
 
   /**
@@ -31,7 +31,7 @@ public class CircularQueueA<Item> implements Iterable<Item> {
    * @return true if there are no items in the queue, otherwise return false.
    */
   public boolean isEmpty() {
-    return false; // TODO: Need to implement.
+    return size() == 0;
   }
 
   /**
@@ -40,7 +40,13 @@ public class CircularQueueA<Item> implements Iterable<Item> {
    * @return the number of items.
    */
   public int size() {
-    return -1; // TODO: Need to implement.
+    int counter = 0;
+    for (int i = 0; i < items.length; i++) {
+      if(items[i] != null)
+        counter++;
+    }
+
+    return counter;
   }
 
   /**
@@ -48,7 +54,9 @@ public class CircularQueueA<Item> implements Iterable<Item> {
    * @param item
    * @throws UnsupportedOperationException
    */
-  public void enqueue(Item item) throws UnsupportedOperationException {
+  public void enqueue(E item) throws UnsupportedOperationException {
+    if(isFull())
+      throw new UnsupportedOperationException("Cannot add another element to a full queue.");
 
   }
 
@@ -58,8 +66,11 @@ public class CircularQueueA<Item> implements Iterable<Item> {
    * @return the removed item.
    * @throws NoSuchElementException
    */
-  public Item dequeue() throws NoSuchElementException {
-    return new Item();
+  public E dequeue() throws NoSuchElementException {
+    if(isEmpty())
+      throw new NoSuchElementException("No elements exist, cannot dequeue an element that does not exist.");
+
+    return new E();
   }
 
   /**
@@ -68,8 +79,11 @@ public class CircularQueueA<Item> implements Iterable<Item> {
    * @return the next item.
    * @throws NoSuchElementException
    */
-  public Item peek() throws NoSuchElementException {
-    return new Item();
+  public E peek() throws NoSuchElementException {
+    if(isEmpty())
+      throw new NoSuchElementException("No elements exist, cannot peek an element that does not exist.");
+
+    return new E();
   }
 
   @Override
@@ -78,7 +92,7 @@ public class CircularQueueA<Item> implements Iterable<Item> {
   }
 
   @Override
-  public Iterator<Item> iterator() {
+  public Iterator<E> iterator() {
     // TODO Auto-generated method stub
     return null;
   }
