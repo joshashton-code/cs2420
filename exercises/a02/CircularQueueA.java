@@ -177,6 +177,9 @@ public class CircularQueueA<E> implements Iterable<E> {
       System.out.println(queue.toString() + "\n");
       queue.enqueue(4);
       System.out.println(queue.toString() + "\n");
+      queue.dequeue();
+      queue.enqueue(5);
+      System.out.println(queue.toString() + "\n");
       Iterator<Integer> it = queue.iterator();
       while (it.hasNext()) {
         System.out.print(it.next() + " ");

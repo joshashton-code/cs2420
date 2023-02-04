@@ -11,6 +11,9 @@ public class CircularQueueB<E> implements Iterable<E> {
 	final private int capacity;
 
 	public CircularQueueB(int capacity) {
+		if(capacity < 1)
+			throw new IllegalArgumentException("Cannot create a queue with a capacity lower than 1. Capacity higher than 2 is recommended.");
+
 		this.capacity = capacity;
 		head = null;
 		tail = null;
@@ -87,7 +90,10 @@ public class CircularQueueB<E> implements Iterable<E> {
     if(isEmpty())
       throw new NoSuchElementException("No elements exist, cannot dequeue an element that does not exist.");
 
-		return null; // TODO: Need to implement in part 2.
+		E item = head.item;
+		head = head.next;
+		n--;
+		return item; // TODO: Need to implement in part 2.
 		}
 
   /**
@@ -105,7 +111,18 @@ public class CircularQueueB<E> implements Iterable<E> {
 
 	@Override
 	public String toString() {
-		return null; // TODO: Need to implement in part 2.
+    if(isEmpty())
+      return "";
+
+    StringBuilder sb = new StringBuilder();
+
+		Iterator<E> it = new QueueIterator(head);
+
+		while(it.hasNext()) {
+			sb.append(it.next().toString() + " ");
+		}
+
+    return sb.toString();
 	}
 
   @Override
@@ -122,17 +139,38 @@ public class CircularQueueB<E> implements Iterable<E> {
 
 		@Override
 		public boolean hasNext() {
-			return current.next != null;
+			return current != null;
 		}
 
 		@Override
 		public E next() {
 			if(!hasNext())
 				throw new UnsupportedOperationException("There is no more elements.");
+
 			E nextElement = current.item;
 			current = current.next;
 			return nextElement;
 		}
 
 	}
+
+	// # # # # Testing Area # # # # //
+	public static void main(String[] args) {
+		CircularQueueB<Integer> queue = new CircularQueueB<>(5);
+		System.out.println(queue.toString() + "\n");
+		queue.enqueue(4);
+		queue.enqueue(3);
+		queue.enqueue(2);
+		queue.enqueue(1);
+		System.out.println(queue.toString() + "\n");
+
+		queue.dequeue();
+		queue.dequeue();
+		queue.dequeue();
+		queue.dequeue();
+
+		System.out.println(queue.toString() + "\n");
+
+	}
+
 }
