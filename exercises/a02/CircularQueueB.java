@@ -8,6 +8,14 @@ public class CircularQueueB<E> implements Iterable<E> {
 	private Node head; // first node of the list or null
 	private Node tail; // last node of the list or null
 	private int n;     // number of words in the list
+	final private int capacity;
+
+	public CircularQueueB(int capacity) {
+		this.capacity = capacity;
+		head = null;
+		tail = null;
+		n = 0;
+	}
 
   	/**
 	 * Node of LinkedList that stores the item and a
@@ -16,13 +24,6 @@ public class CircularQueueB<E> implements Iterable<E> {
 	private class Node {
 		private E item;
 		private Node next;
-    private Node prev;
-
-    public Node(E item, Node next, Node prev) {
-      this.item = item;
-      this.next = next;
-      this.prev = prev;
-    }
 	}
 
 	/**
@@ -43,6 +44,15 @@ public class CircularQueueB<E> implements Iterable<E> {
 		return n == 0;
 	}
 
+	/**
+	 * Determines if the list is full or not
+	 * 
+	 * @return true if the number of elements equals the capacity.
+	 */
+	public boolean isFull() {
+		return n == capacity;
+	}
+
   /**
    * Adds item into the cicular queue. Inserts into LinkedList for appropriate positioning.
 	 * 
@@ -50,9 +60,21 @@ public class CircularQueueB<E> implements Iterable<E> {
    * @throws UnsupportedOperationException
    */
   public void enqueue(E item) throws UnsupportedOperationException {
-    Node newTail = new Node(item, head, tail);
-    tail.next = newTail;
-    newTail = tail;
+		if(isFull())
+			throw new UnsupportedOperationException("Cannot insert a new Node into a full Linked List.");
+
+		Node newNode = new Node();
+		newNode.item = item;
+		
+		if (n == 0) {
+			head = newNode;
+			tail = newNode;
+		}
+		else {
+			tail.next = newNode;
+			tail = newNode;
+		}
+		n++;
   }
 
   /**
@@ -78,7 +100,7 @@ public class CircularQueueB<E> implements Iterable<E> {
     if(isEmpty())
       throw new NoSuchElementException("No elements exist, cannot peek an element that does not exist.");
 
-		return null; // TODO: Need to implement.
+		return head.item;
   }
 
 	@Override
@@ -88,19 +110,25 @@ public class CircularQueueB<E> implements Iterable<E> {
 
   @Override
 	public Iterator<E> iterator() {
-		return new QueueIterator();
+		return new QueueIterator(head);
 	}
 
 	private class QueueIterator implements Iterator<E> {
-		private Node current = head;
+		private Node current;
+
+		public QueueIterator(Node current) {
+			this.current = current;
+		}
 
 		@Override
 		public boolean hasNext() {
-			return current != null;
+			return current.next != null;
 		}
 
 		@Override
 		public E next() {
+			if(!hasNext())
+				throw new UnsupportedOperationException("There is no more elements.");
 			E nextElement = current.item;
 			current = current.next;
 			return nextElement;

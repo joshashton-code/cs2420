@@ -135,8 +135,35 @@ public class CircularQueueA<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    // TODO Auto-generated method stub
-    return null;
+    return new QueueIterator();
+  }
+
+  private class QueueIterator implements Iterator<E> {
+
+    private int currentHead;
+    private int counter = 0;
+
+    public QueueIterator() {
+    }
+
+    public boolean hasNext()  {
+      return counter < items.length && items[currentHead] != null;
+    }
+
+    public E next() {
+        if (!hasNext()) 
+          throw new NoSuchElementException();
+
+        E item = items[currentHead];
+        if(currentHead == items.length)
+          currentHead = 0;
+        else
+          currentHead++;
+
+        counter++;
+        return item;
+    }
+
   }
   
   // # # # # Testing Area # # # # //
@@ -150,12 +177,18 @@ public class CircularQueueA<E> implements Iterable<E> {
       System.out.println(queue.toString() + "\n");
       queue.enqueue(4);
       System.out.println(queue.toString() + "\n");
-      System.out.println(queue.dequeue());
-      System.out.println(queue.toString() + "\n");
-      queue.enqueue(9);
-      System.out.println(queue.toString() + "\n");
-      queue.enqueue(10);
-      System.out.println(queue.toString());
+      Iterator<Integer> it = queue.iterator();
+      while (it.hasNext()) {
+        System.out.print(it.next() + " ");
+      }
+      // System.out.println(queue.dequeue());
+      // System.out.println(queue.toString() + "\n");
+      // queue.enqueue(9);
+      // System.out.println(queue.toString() + "\n");
+      // queue.enqueue(10);
+      // System.out.println(queue.toString());
+      // System.out.println(queue.dequeue());
+      // System.out.println(queue.toString() + "\n");
   }
 
 }
