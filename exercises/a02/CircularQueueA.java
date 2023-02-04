@@ -1,5 +1,7 @@
 package a02;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -12,12 +14,19 @@ public class CircularQueueA<E> implements Iterable<E> {
 
   private E[] items;
   private int n;
+  private int head;
+  private int tail;
 
   public CircularQueueA(int capacity) throws IllegalArgumentException {
     if(capacity < 1)
       throw new IllegalArgumentException("Cannot create a queue with a capacity lower than 1. Capacity higher than 2 is recommended.");
-
-    // TODO: Need to implement generic array creation in constructor.
+      
+    items = (E[])new Object[capacity];
+      for (int i = 0; i < items.length; i++) {
+        items[i] = null;
+      }
+    head = 0;
+    tail = 0;
     n = 0;
   }
 
@@ -63,6 +72,12 @@ public class CircularQueueA<E> implements Iterable<E> {
     if(isFull())
       throw new UnsupportedOperationException("Cannot add another element to a full queue.");
 
+    if(tail == items.length && tail != 0)
+      tail = 0;
+
+    items[tail++] = item;
+
+    n++;
   }
 
   /**
@@ -75,7 +90,13 @@ public class CircularQueueA<E> implements Iterable<E> {
     if(isEmpty())
       throw new NoSuchElementException("No elements exist, cannot dequeue an element that does not exist.");
 
-    return items[0];
+    if(head == items.length -1 && head != 0)
+      head = 0;
+
+    n--;
+    E item = items[head];
+    items[head++] = null;
+    return item;
   }
 
   /**
@@ -88,12 +109,28 @@ public class CircularQueueA<E> implements Iterable<E> {
     if(isEmpty())
       throw new NoSuchElementException("No elements exist, cannot peek an element that does not exist.");
 
-    return items[0];
+    return items[head];
   }
 
   @Override
   public String toString() {
-    return super.toString();
+    if(isEmpty())
+      return "";
+
+    StringBuilder sb = new StringBuilder();
+
+    int tempHead = head;
+    int counter = 0;
+
+    while(counter < n) {
+      if(tempHead == items.length)
+        tempHead = 0;
+      
+      sb.append(items[tempHead++] + " ");
+      counter++;
+    }
+
+    return sb.toString();
   }
 
   @Override
@@ -102,4 +139,23 @@ public class CircularQueueA<E> implements Iterable<E> {
     return null;
   }
   
+  // # # # # Testing Area # # # # //
+  public static void main(String[] args) {
+    CircularQueueA<Integer> queue = new CircularQueueA<>(5);
+      queue.enqueue(1);
+      System.out.println(queue.toString() + "\n");
+      queue.enqueue(2);
+      System.out.println(queue.toString() + "\n");
+      queue.enqueue(3);
+      System.out.println(queue.toString() + "\n");
+      queue.enqueue(4);
+      System.out.println(queue.toString() + "\n");
+      System.out.println(queue.dequeue());
+      System.out.println(queue.toString() + "\n");
+      queue.enqueue(9);
+      System.out.println(queue.toString() + "\n");
+      queue.enqueue(10);
+      System.out.println(queue.toString());
+  }
+
 }
