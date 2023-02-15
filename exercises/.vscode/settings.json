@@ -1,0 +1,9 @@
+{
+  "java.project.sourcePaths": [
+    "lib",
+    "ceMerge"
+  ],
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar"
+  ]
+}

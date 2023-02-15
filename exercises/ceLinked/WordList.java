@@ -73,13 +73,11 @@ public class WordList implements Iterable<String> {
 		int index = 0;
 		Node current = head;
 		while(current != null) {
-			if(current.item.equals(item)) {
+			if(current.item.equals(item))
 				return index;
-			} else {
-				index++;
-				current = current.next;
-			}
-	}
+			index++;
+			current = current.next;
+		}
 		return -1; // TODO 3
 	}
 	
@@ -92,12 +90,10 @@ public class WordList implements Iterable<String> {
 	public boolean contains(String item) {	
 		Node current = head;
 		while(current != null) {
-			if(current.item.equals(item)) {
-				return true;
-			} else {
-				current = current.next;
-			}
-	}
+			if(current.item.equals(item))
+				return true;		 
+			current = current.next;
+		}
 		return false; // TODO 3
 	}
 	

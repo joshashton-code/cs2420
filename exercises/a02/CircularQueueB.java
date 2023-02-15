@@ -93,7 +93,7 @@ public class CircularQueueB<E> implements Iterable<E> {
 		E item = head.item;
 		head = head.next;
 		n--;
-		return item; // TODO: Need to implement in part 2.
+		return item;
 		}
 
   /**
@@ -169,7 +169,7 @@ public class CircularQueueB<E> implements Iterable<E> {
 		queue.dequeue();
 		queue.dequeue();
 
-		System.out.println(queue.toString() + "\n");
+		System.out.println("Queue: " + queue.toString() + "\n");
 
 	}
 
