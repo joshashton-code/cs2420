@@ -54,7 +54,7 @@ public class SortedList<Item extends Comparable<Item>> {
 	 * @throws NullPointerException if the specified element is null
 	 */
 	public void insert(Item item) {
-		// TODO
+		// TODO: Need to implement.
 	}
 
 	/**
