@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * The elements are internally stored in a doubly-linked list, and 
  * null elements are not allowed.
  * 
- * @author CSIS Starter Code + ..... (replace the dots with your name)
+ * @author CSIS Starter Code + Josh Ashton + Hunter Fourt
  *  
  * @param <Item> type of elements stored in the sorted list
  */
@@ -26,6 +26,7 @@ public class SortedList<Item extends Comparable<Item>> {
 	 */ 
 	private class Node {
 		private Node next;
+		private Node prev;
 		private Item item;
 	}
 	
@@ -54,7 +55,23 @@ public class SortedList<Item extends Comparable<Item>> {
 	 * @throws NullPointerException if the specified element is null
 	 */
 	public void insert(Item item) {
-		// TODO: Need to implement.
+		if(n == 0) 
+			throw new NoSuchElementException();
+		
+		int position = 0;
+		Node current = head;
+		Item result = null;
+		while(current != null) {
+			if(position == index) {
+				current.prev.next = current.next;
+				current.next.prev = current.prev;
+				result = current.item;
+				current = null;
+				break;
+			}
+			current = current.next;
+			position++;
+		}
 	}
 
 	/**
@@ -67,7 +84,26 @@ public class SortedList<Item extends Comparable<Item>> {
 	 * @throws IndexOutOfBoundsException if the specified index is not in the range [0, n)
 	 */
 	public Item delete(int index) {
-		return null; // TODO
+		if(n == 0) 
+			throw new NoSuchElementException();
+		if(index < 0 || index > n - 1)
+			throw new IndexOutOfBoundsException();
+		
+		int position = 0;
+		Node current = head;
+		Item result = null;
+		while(current != null) {
+			if(position == index) {
+				current.prev.next = current.next;
+				current.next.prev = current.prev;
+				result = current.item;
+				current = null;
+				break;
+			}
+			current = current.next;
+			position++;
+		}
+		return result;
 	}
 	
 	/**
@@ -87,7 +123,23 @@ public class SortedList<Item extends Comparable<Item>> {
 	 * @throws NullPointerException if this list is not empty and the item passed to the method is null
 	 */
 	public void update(int index, Item item) {
-		// TODO
+		if(item == null)
+			throw new NullPointerException();
+		if(n == 0) 
+			throw new NoSuchElementException();
+		if(index < 0 || index > n - 1)
+			throw new IndexOutOfBoundsException();
+		
+		int position = 0;
+		Node current = head;
+		while(current != null) {
+			if(position == index) {
+				current.item = item;
+				break;
+			}
+			current = current.next;
+			position++;
+		}
 	}
 
 	
@@ -100,7 +152,7 @@ public class SortedList<Item extends Comparable<Item>> {
 	 */
 	@Override
 	public String toString() {
-		return null; // TODO
+		return null; // TODO: Need to implement.
 	}
 	
 	// = = = Optional Test Client = = =
